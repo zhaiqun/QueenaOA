@@ -1,0 +1,56 @@
+﻿@model net.qunqun.zhaiqunOA.Model.UserInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Edit</title>
+    <script src="../../Scripts/jquery-1.7.1.min.js"></script>
+    <script src="../../Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script  type="text/javascript">
+        function EditAfter(msg) {
+            window.parent.EditAfer(msg);
+        
+        }
+        function FormSubmit() {
+            $("form").submit();
+        }
+    </script>
+</head>
+<body>
+    <div>
+           @using (Ajax.BeginForm("Edit","User",new AjaxOptions(){
+                    OnSuccess="EditAfter"
+           }))
+           {
+               <table>
+                  <tr>
+                      <td>用户名:</td>
+                      <td>
+                          @Html.TextBoxFor(c=>c.UserName)
+                          <input type="hidden" name="UserId" value=" @Model.UserId" />  
+                      </td>
+                  </tr>
+                   <tr>
+                      <td>密码:</td>
+                      <td>
+                          <input type="password" name="UserPwd" value="@Model.UserPwd " />
+                          <input type="hidden" name="pwd" value="@Model.UserPwd" />
+                      </td>
+                  </tr>
+                     <tr>
+                      <td>姓名：</td>
+                      <td>@Html.TextBoxFor(c=>c.UserTrueName)</td>
+                  </tr>
+                  <tr>
+                      <td>备注：</td>
+                      <td>@Html.TextBoxFor(c=>c.Remark)</td>
+                  </tr>
+              </table>
+           }
+    </div>
+</body>
+</html>

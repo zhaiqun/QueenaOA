@@ -1,0 +1,29 @@
+﻿@model net.qunqun.zhaiqunOA.Model.UserInfo
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+<table>
+     @Html.BeginForm("Add","UserInfo")
+    {
+       <tr>
+           <td>@Html.LabelFor(c=>c.UserName)</td>
+           <td>@Html.TextBoxFor(c=>c.UserName)</td>
+       </tr>
+     <tr>
+           <td>@Html.LabelFor(c=>c.UserPwd)</td>
+           <td>@Html.PasswordFor(c=>c.UserPwd)</td>
+       </tr>
+         <tr>
+           <td>@Html.LabelFor(c=>c.UserTrueName)</td>
+           <td>@Html.TextBoxFor(c=>c.UserTrueName)</td>
+       </tr>
+        <tr>
+           <td></td>
+           <td>
+               <input type="submit"  value="增加" />
+           </td>
+       </tr>
+    }
+</table>

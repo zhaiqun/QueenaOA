@@ -1,0 +1,231 @@
+﻿@model   IQueryable<net.qunqun.zhaiqunOA.Model.ActionInfo>
+ @{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Index</title>
+    <link href="../../Content/MyFile/easyUithemes/default/easyui.css" rel="stylesheet" />
+    <link href="../../Content/MyFile/easyUithemes/icon.css" rel="stylesheet" />
+    <link href="../../Content/MyFile/easyUithemes/demo.css" rel="stylesheet" />
+    <script src="../../Scripts/jquery.min.js"></script>
+    <script src="../../Scripts/jquery.easyui.min.js"></script>
+
+    <link href="../../Content/MyFile/LigerUi/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" /> 
+  @*  <script src="../../Scripts/jquery-1.7.1.min.js"></script>*@
+    <script src="../../Content/MyFile/LigerUi/ligerUI/js/core/base.js"></script>
+    <script src="../../Content/MyFile/LigerUi/ligerUI/js/ligerui.min.js"></script>
+@*    <script src="../../Content/MyFile/LigerUi/ligerUI/js/plugins/ligerDialog.js"></script>
+    <script src="../../Content/MyFile/LigerUi/ligerUI/js/plugins/ligerDrag.js"></script> 
+      <script src="../../Content/MyFile/LigerUi/ligerUI/js/plugins/ligerResizable.js"></script>*@
+    <style  type="text/css">
+        #north
+        {
+       
+             background:#B3DFDA;
+             padding-top:10px;
+             background:url(../../Content/MyFile/Pic/home/bg3.png)
+        }
+                #north h1,img
+            {
+               float:left;
+            }
+            #north #exit
+            {
+                float:right;
+            }
+        #center
+        {
+            background:url(../../Content/MyFile/Pic/home/win8.jpg)
+        }
+      /*ligerUi*/
+        .l-case-title
+        {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        body, html
+        {
+            width: 100%;
+            height: 100%;
+        }
+        *
+        {
+            margin: 0;
+            padding: 0;
+        }
+        #winlinks
+        {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            width: 100%;
+            clear:both
+        }
+        #winlinks ul
+        {
+            position: relative;
+        }
+        #winlinks li
+        {
+            width: 70px;
+            cursor: pointer;
+            height: 80px;
+            position: absolute;
+            z-index: 101;
+            list-style: none;
+            text-align: center;
+        }
+        #winlinks li img
+        {
+            width: 36px;
+            height: 36px;
+        }
+        #winlinks li span
+        {
+            background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
+            border-radius: 10px 10px 10px 10px;
+            display: block;
+            font-size: 12px;
+            margin-top: 1px;
+            color: White;
+            line-height: 18px;
+            text-align: center;
+        }
+        #winlinks li.l-over div.bg
+        {
+            display: block;
+        }
+        #winlinks li div.bg
+        {
+            display: none;
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            z-index: 0;
+            width: 75px;
+            height: 64px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background: #000;
+            opacity: 0.1;
+            filter: alpha(opacity=10);
+        }
+        .l-taskbar-task-icon
+        {
+            top: 3px; left: 6px; background-image:none;
+        } 
+        .l-taskbar-task-content{ margin-left:30px;}
+        .l-taskbar-task-icon img
+        {
+            width: 22px;
+            height: 22px;
+        }
+
+    </style>
+   
+
+</head>
+
+<body class="easyui-layout">
+	<div  id="north" data-options="region:'north',border:false" style="height:89px;padding:10px">
+        <img src="../../Content/MyFile/Pic/home/logo.gif" />
+        <h1>裙裙OA系统</h1>
+          <a  href="@Url.Action("Logout","UserLogin")"><img  id="exit" src="../../Content/MyFile/Pic/home/big.png" /></a> 
+	</div>
+@*	<div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">west content</div>
+	<div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
+	<div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div>*@
+	<div   id="center"data-options="region:'center'" >
+	<div  id="winlinks" >
+         <ul>
+
+         </ul>
+	</div>
+	</div>
+    <script type="text/javascript">
+        var LINKWIDTH = 90, LINKHEIGHT = 90, TASKBARHEIGHT = 43;
+        var winlinksul = $("#winlinks ul");
+        function f_open(url, title, icon) {
+            var win = $.ligerDialog.open(
+            {
+                height: 500, url: url, width: 600, showMax: true, showToggle: true, showMin: true, isResize: true, modal: false, title: title, slide: false, buttons: [
+                  {
+                      text: '确定', onclick: function (item, Dialog, index) {
+                          win.hide();
+                      }
+                  }
+                ]
+            });
+            var task = jQuery.ligerui.win.tasks[win.id];
+            if (task) {
+                $(".l-taskbar-task-icon:first", task).html('<img src="' + icon + '" />');
+            }
+            return win;
+        }
+        var links = [
+        
+                @foreach (var item in Model)
+                {
+      
+                          @Html.Raw(" { icon: '"+item.MenuIcon+"', title: '"+item.ActionTitle+"', url: '"+Url.Action(item.ContorllerName,item.ActionName)+"'},");
+                }
+                { icon: '../../Content/MyFile/Pic/home/images/3DSMAX.png', title: 'treegrid', url: '../grid/treegrid/treegrid.htm' },
+              
+        ];
+
+        function onResize() {
+            var linksHeight = $(window).height() - TASKBARHEIGHT;
+            var winlinks = $("#winlinks");
+            winlinks.height(linksHeight);
+            var colMaxNumber = parseInt(linksHeight / LINKHEIGHT);//一列最多显示几个快捷方式
+            for (var i = 0, l = links.length; i < l; i++) {
+                var link = links[i];
+                var jlink = $("li[linkindex=" + i + "]", winlinks);
+                var top = (i % colMaxNumber) * LINKHEIGHT, left = parseInt(i / colMaxNumber) * LINKWIDTH;
+                if (isNaN(top) || isNaN(left)) continue;
+                jlink.css({ top: top, left: left });
+            }
+
+        }
+        function linksInit() {
+            for (var i = 0, l = links.length; i < l; i++) {
+                var link = links[i];
+                var jlink;
+                var jlink = $("<li></li>");
+                jlink.attr("linkindex", i);
+                jlink.append("<img src='" + link.icon + "' />");
+                jlink.append("<span>" + link.title + "</span>");
+                jlink.append("<div class='bg'></div>");
+                jlink.hover(function () {
+                    $(this).addClass("l-over");
+                }, function () {
+                    $(this).removeClass("l-over");
+                }).click(function () {
+                  
+                    var linkindex = $(this).attr("linkindex");
+                    var link = links[linkindex];
+                    f_open(link.url, link.title, link.icon);
+                });
+                jlink.appendTo(winlinksul);
+            }
+
+        }
+
+        $(window).resize(onResize);
+        $.ligerui.win.removeTaskbar = function () { }; //不允许移除
+        $.ligerui.win.createTaskbar(); //页面加载时创建任务栏
+
+        linksInit();
+        onResize();
+
+    </script>
+
+</body>
+
+</html>

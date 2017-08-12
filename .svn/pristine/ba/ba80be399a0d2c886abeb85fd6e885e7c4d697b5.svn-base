@@ -1,0 +1,67 @@
+﻿
+@model  net.qunqun.zhaiqunOA.UI.Models.SetRoleViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>SetRole</title>
+    <script src="../../Scripts/jquery-1.7.1.min.js"></script>
+    <script src="../../Scripts/jquery.easyui.min.js"></script>
+    <script src="../../Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function FormSubmit() {
+            var ids = "";
+            $(":checked").each(function () {
+
+                ids += $(this).val() + ',';
+            });
+            ids = ids.substring(0, ids.length - 1);
+
+            $.post('@Url.Action("SetRole","User")', {
+                ids: ids,
+                userId: $("#UserId").val()
+            }, function (msg) {
+                window.parent.SetRoleAfter(msg);
+
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div>
+        @{
+            var userInfo = Model.UserModel;
+            var RoleModels = Model.RoleModels;
+            }
+        <input type="hidden"  id="UserId"  value="@userInfo.UserId"/>
+        <span>为<font color="red">@userInfo.UserTrueName </font>分配角色</span>
+        <table>
+            <tr>
+                @{ int count = 0;
+                   foreach (var item in RoleModels)
+                   {
+                       count++;
+                    <td>
+                        <input type="checkbox"  value="@item.RoleId"
+                            @if(userInfo.RoleInfo.Contains(item))
+                            {
+                                @Html.Raw("checked");
+                            }
+                             />@item.RoleName
+                    </td>
+                       if (count%3==0)
+                       {
+                           @Html.Raw("</tr><tr>");
+                       }
+                   }
+                }
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

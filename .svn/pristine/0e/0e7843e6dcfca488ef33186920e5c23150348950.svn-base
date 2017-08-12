@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<configSections>
+		<section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net"/>
+	</configSections>
+	<log4net>
+		<!-- Define some output appenders -->
+		<appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+			<file value="test.txt"/>
+			<appendToFile value="true"/>
+			<!--日志文件最大个数，分别为test.txt1,test.txt1...test.txt10，当10满了之后将向test.txt1中重写内容-->
+			<maxSizeRollBackups value="10"/>
+			<!--日志文件最大1M：如果超过1M，则将原有文件改名，并创建新文件test.txt-->
+			<maximumFileSize value="1024KB"/>
+			<rollingStyle value="Size"/>
+			<staticLogFileName value="true"/>
+			<layout type="log4net.Layout.PatternLayout">
+				<conversionPattern value="%date [%thread] %-5level %logger - %message%newline"/>
+			</layout>
+		</appender>
+		<root>
+			<!--配置日志的级别，低于此级别的就不写到日志里面去-->
+			<level value="DEBUG"/>
+			<appender-ref ref="RollingLogFileAppender"/>
+		</root>
+	</log4net>
+</configuration>

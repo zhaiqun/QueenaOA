@@ -1,0 +1,15 @@
+D:\黑马培训课程\11zhaiqunOA\T4第三方框架\zhaiqunOA\Log4NetTest\bin\Debug\Log4NetTest.exe.config
+D:\黑马培训课程\11zhaiqunOA\T4第三方框架\zhaiqunOA\Log4NetTest\bin\Debug\Log4NetTest.exe
+D:\黑马培训课程\11zhaiqunOA\T4第三方框架\zhaiqunOA\Log4NetTest\bin\Debug\Log4NetTest.pdb
+D:\黑马培训课程\11zhaiqunOA\T4第三方框架\zhaiqunOA\Log4NetTest\bin\Debug\log4net.dll
+D:\黑马培训课程\11zhaiqunOA\T4第三方框架\zhaiqunOA\Log4NetTest\bin\Debug\log4net.xml
+D:\黑马培训课程\11zhaiqunOA\T4第三方框架\zhaiqunOA\Log4NetTest\obj\Debug\Log4NetTest.exe
+D:\黑马培训课程\11zhaiqunOA\T4第三方框架\zhaiqunOA\Log4NetTest\obj\Debug\Log4NetTest.pdb
+D:\黑马培训课程\11zhaiqunOA\T4第三方框架\zhaiqunOA\Log4NetTest\obj\Debug\Log4NetTest.csprojResolveAssemblyReference.cache
+D:\黑马培训课程\zhaiqunOA\Log4NetTest\bin\Debug\Log4NetTest.exe.config
+D:\黑马培训课程\zhaiqunOA\Log4NetTest\bin\Debug\Log4NetTest.exe
+D:\黑马培训课程\zhaiqunOA\Log4NetTest\bin\Debug\Log4NetTest.pdb
+D:\黑马培训课程\zhaiqunOA\Log4NetTest\bin\Debug\log4net.dll
+D:\黑马培训课程\zhaiqunOA\Log4NetTest\bin\Debug\log4net.xml
+D:\黑马培训课程\zhaiqunOA\Log4NetTest\obj\Debug\Log4NetTest.exe
+D:\黑马培训课程\zhaiqunOA\Log4NetTest\obj\Debug\Log4NetTest.pdb

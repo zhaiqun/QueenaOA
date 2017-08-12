@@ -1,0 +1,3 @@
+2014-05-04 11:55:31,053 [10] DEBUG RollingLogFileAppender - this is a debug error--
+2014-05-04 16:51:24,135 [9] DEBUG RollingLogFileAppender - this is a debug error--
+2014-05-05 09:04:11,052 [9] DEBUG RollingLogFileAppender - this is a debug error--

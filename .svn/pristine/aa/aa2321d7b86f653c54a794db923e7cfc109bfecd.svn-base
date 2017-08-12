@@ -1,0 +1,14 @@
+﻿using net.qunqun.zhaiqunOA.Model;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using net.qunqun.zhaiqunOA.IDal;
+namespace net.qunqun.zhaiqunOA.Dal
+{
+}
+

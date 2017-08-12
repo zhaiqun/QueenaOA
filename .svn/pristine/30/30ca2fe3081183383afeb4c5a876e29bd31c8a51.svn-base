@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using net.qunqun.zhaiqunOA.IBll;
+using net.qunqun.zhaiqunOA.Model;
+using net.qunqun.zhaiqunOA.Bll;
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="EF.Utility.CS.ttinclude"#>
+<#@ output extension=".cs" #>
+namespace net.qunqun.zhaiqunOA.BllFactory
+{
+<#
+    MetadataLoader loader=new MetadataLoader(this);
+    EdmItemCollection collection= loader.CreateEdmItemCollection("net.qunqun.zhaiqunOA.Model/UserInfo.edmx");
+
+    foreach(EntityType item in collection.GetItems<EntityType>())
+    {
+#>
+public partial class BllFactoryClass
+{
+	   public  static I<#=item.Name#>Bll  Get<#=item.Name#>Bll()
+      {
+          return  new   <#=item.Name#>Manager();
+      }
+}
+<#}#>
+}

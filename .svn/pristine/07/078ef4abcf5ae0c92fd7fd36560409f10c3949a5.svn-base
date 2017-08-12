@@ -1,0 +1,46 @@
+﻿@model  net.qunqun.zhaiqunOA.UI.Models.RoleSetActionModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>SetAction</title>
+    <script src="../../Scripts/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+    <div>
+        @{
+            var roleinfo = Model.RoleModel;
+            var actionModels = Model.ActionModels;
+        }
+         <input type="hidden"  id="RoleId"  value="@roleinfo.RoleId"/>
+        <span>为<font>@roleinfo.RoleName</font>分配权限</span>
+        <table>
+            <tr>
+                @{
+                    int count = 0;
+                    foreach (var item in actionModels)
+                    {
+                        count++;
+                    <td>
+                        <input type="checkbox"  value="@item.ActionId" 
+                            @if (roleinfo.ActionInfo.Contains(item))
+                            {
+                                Html.Raw("checked");
+                            }
+                            />@item.ActionTitle
+                    </td>
+                    if (count % 5 == 0)
+                    {
+                        @Html.Raw("</tr><tr>");
+                    }
+                    }
+                }
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

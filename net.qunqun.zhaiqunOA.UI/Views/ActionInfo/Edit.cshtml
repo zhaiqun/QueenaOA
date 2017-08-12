@@ -1,0 +1,120 @@
+﻿@model   net.qunqun.zhaiqunOA.Model.ActionInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Edit</title>
+    <script src="../../Scripts/jquery-1.7.1.js"></script>
+    <script src="../../Scripts/jquery.easyui.min.js"></script>
+    <script src="../../Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="../../Scripts/MyAjaxForm.js"></script>
+    <script type="text/javascript">
+        function EditAfter(msg) {
+            window.parent.EditAfter(msg);
+        }
+        function FormSubmit() {
+            $('Form').submit();
+        }
+        $(function () {
+            bindImgUploadClick();
+            if ($("#ckIsMenu").prop("checked") == true) {
+                $("#iconTd").show();
+            }
+            else {
+                $("#iconTd").hide();
+            }
+
+
+            $("#ckIsMenu").click(function () {
+
+                if ($("#ckIsMenu").prop("checked") == true) {
+                    $("#iconTd").show();
+
+                }
+                else {
+                    $("#iconTd").hide();
+                }
+            });
+        })
+        function bindImgUploadClick() {
+            $("#btnUploadIconImg").click(function () {
+                alert();
+                //第一件事：判断文件input标签中有没有文件
+                if ($("#iconInput").val()) {
+                    //让表单异步的提交到后台。
+                    $("#MenuAddFrm").ajaxSubmit({
+                        error: function (error) { alert(error); },
+                        url: '@Url.Action("UploadMenu", "ActionInfo")', /*设置post提交到的页面*/
+                        type: "post", /*设置表单以post方法提交*/
+                        dataType: "text", /*设置返回值类型为文本*/
+                        success: function (data) {
+                            $("#iconUrl").val(data);
+                            $("#iconTd:last-child").append("<img src='" + data + "' width='50px' heigth='50px' />");
+                            $("#iconInput").val("");
+                        }
+                    });
+                } else {
+                    $.messager.alert("错误消息", "请选择合法图片！");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="addDiv">
+        @using (Ajax.BeginForm("Edit", "ActionInfo", null, new AjaxOptions()
+        {
+
+            OnSuccess = "EditAfter"
+        },
+           new { id = "MenuAddFrm", enctype = "multipart/form-data" }))
+        {
+            <table>
+                <tr>
+                    <td>权限名:</td>
+                    <td>@Html.TextBoxFor(c => c.ActionTitle)
+                        <input type="hidden" name="ActionId" value="@Model.ActionId" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>控制器名称:</td>
+                    <td>@Html.TextBoxFor(c => c.ContorllerName)</td>
+                </tr>
+                <tr>
+                    <td>行为名称:</td>
+                    <td>@Html.TextBoxFor(c => c.ActionName)</td>
+                </tr>
+                <tr>
+                    <td>桌面菜单:</td>
+                    <td>
+                        <input type="checkbox" name="IsMenu" value="true"  id="ckIsMenu" 
+                          @if (Model.IsMenu)
+                          {
+                      
+                             @Html.Raw("checked");
+                          } 
+                              />
+                    </td>
+                </tr>
+                <tr id="iconTd">
+                    <td>桌面图标:</td>
+                    <td>
+                        <input id="iconUrl" type="text" name="MenuIcon" value="@Model.MenuIcon" />
+                        <input id="iconInput" type="file" name="iconImg" />
+                        <input type="button" value="上传图片" id="btnUploadIconImg" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>备注：</td>
+                    <td>@Html.TextBoxFor(c => c.Remark)</td>
+                </tr>
+            </table>
+          
+        }
+    </div>
+</body>
+</html>

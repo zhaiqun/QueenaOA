@@ -1,0 +1,15 @@
+﻿using net.qunqun.zhaiqunOA.IDal;
+using net.qunqun.zhaiqunOA.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace net.qunqun.zhaiqunOA.Dal
+{
+    public class ActionInfoService : BaseService<ActionInfo>, IActionInfoDal
+    {
+     
+    }
+}

@@ -1,0 +1,81 @@
+﻿using net.qunqun.zhaiqunOA.Bll;
+using net.qunqun.zhaiqunOA.Common;
+using net.qunqun.zhaiqunOA.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace net.qunqun.zhaiqunOA.UI.Controllers
+{
+    public class UserController : Controller
+    {
+        //
+        // GET: /User/
+        public UserInfoManager userInfoBll { set; get; }
+        public ActionResult Index()
+        {
+            return View();
+        }
+        public ActionResult GetPageList(int page, int rows)
+        { 
+            int rowCount;
+            IQueryable<UserInfo> result = userInfoBll.SelectByRow(rows, page, u => u.IsDelete == false, u => u.UserId, out rowCount);
+            List<UserInfo> resul = result.ToList();
+            return Json(new { total = rowCount, rows = result },JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Add(UserInfo  model)
+        {
+            string result = "0";
+            model.IsDelete = false;
+            model.SubBy = 1;
+            model.SubTime = DateTime.Now;
+            model.UserPwd = Md5Helper.GetMd5(model.UserPwd);
+            bool  b= userInfoBll.Add(model);
+            if (b)
+            {
+                result = "1";
+            }
+            return Content(result);
+        }
+
+        public ActionResult Edit(int id)
+        {
+             UserInfo  model=  userInfoBll.Select(id);
+              return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(UserInfo model)
+        {
+            string result = "0";
+            model.SubBy = 1;
+            model.SubTime = DateTime.Now;
+            model.IsDelete = false;
+
+            string pwd = Request["pwd"];
+            if ( pwd!= Md5Helper.GetMd5(model.UserPwd))
+            {
+                model.UserPwd = Md5Helper.GetMd5(model.UserPwd);
+            }
+          bool  b=  userInfoBll.Edit(model);
+            if (b)
+            {
+                result = "1";
+            }
+            return Content(result);
+        }
+
+        public ActionResult Remove(int id)
+        {
+            string result = "0";
+             bool  b= userInfoBll.Delete(id);
+             if (b)
+             {
+                 result = "1";
+             }
+             return Content(result);
+        }
+    }
+}

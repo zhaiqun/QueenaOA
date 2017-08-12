@@ -1,0 +1,212 @@
+﻿@model  net.qunqun.zhaiqunOA.Model.UserInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Index</title>
+    <link href="../../Content/MyFile/easyUithemes/icon.css" rel="stylesheet" />
+    <link href="../../Content/MyFile/easyUithemes/default/easyui.css" rel="stylesheet" />
+    <script src="../../Scripts/jquery-1.7.1.js"  type="text/javascript"></script>
+    <script src="../../Scripts/jquery.easyui.min.js"  type="text/javascript"></script>
+    <script src="../../Scripts/jquery.unobtrusive-ajax.min.js"  type="text/javascript"></script>
+    <script  type="text/javascript">
+        $(function () {
+            $("#addDiv").hide();
+            $("#editDiv").hide();
+            InitData();
+        });
+
+        function InitData() {
+            $("#tt").datagrid({
+                url: '@Url.Action("GetPageList","User")',
+                title: '用户列表',
+                width: 700,
+                height: 400,
+                fitColumns: true,
+                idField: 'UserId',
+                loadMsg: '正在加载用户的信息...',
+                pagination: true,
+                singleSelect: true,
+                pageSize: 10,
+                pageNumber: 1,
+                pageList: [10, 20, 30],
+                queryParams: {},
+                columns: [[
+						{ field: 'ck', checkbox: true, align: 'left', width: 50 },
+						{ field: 'UserId', title: '主键', width: 80 },
+						{ field: 'UserName', title: '用户名', width: 120 },
+						{
+						    field: 'UserTrueName', title: '姓名', width: 80, align: 'right',
+						    //formatter: function (value, row, index) {
+						    //    return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d h:m:s");
+						    //}
+						}
+
+                ]],
+                toolbar: [{
+                    id: 'toolbarAdd',
+                    text: '添加',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        AddShow();
+                    },
+                },
+                {
+                    id: 'toolbarEdit',
+                    text: '修改',
+                    iconCls: 'icon-edit',
+                    handler: function () {
+                        EditShow();
+                    }
+                },
+                 {
+                     id: 'toolbarRemove',
+                     text: '删除',
+                     iconCls: 'icon-Remove',
+                     handler: function () {
+                         RemoveShow();
+                     }
+                 }],
+              
+            });
+        }
+        function RemoveShow() {
+            var row = $('#tt').datagrid("getSelected");
+            if (row==null) {
+                $.messager.alert("提示", "请选择您要删除的行");
+                return;
+            }
+            $.messager.confirm("提示", "确定要删除么", function (msg) {
+                if (msg) {
+                    $.post('@Url.Action("Remove","User")', { id: row["UserId"] }, function (msg) {
+                        if (msg == "1") {
+                            InitData();
+                        }
+                        else {
+                            $.messager.alert("提示", "删除数据失败，请稍后重试");
+                        }
+                    });
+                }
+            });
+           
+        }
+
+        function EditShow() {
+            var row = $('#tt').datagrid("getSelected");
+            if (row==null) {
+                $.messager.alert("提示", "修改数据失败");
+                return;
+            }
+            $("#editDiv").show();
+            $("#editDiv  iframe").attr("src", '@Url.Action("Edit","User")?id=' + row["UserId"]);
+            $("#editDiv").dialog({
+                title: "用户",
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizable: true,
+
+                buttons: [{
+                    text: "修改",
+                    iconCls: "icon-add",
+                    handler: function () {
+                        $("#editDiv iframe")[0].contentWindow.FormSubmit();
+                    }
+                }, {
+                    text: "取消",
+                    iconCls: "icon-cancel",
+                    handler: function () {
+                        $("#editDiv").dialog("close");
+                    }
+                }]
+            });
+        }
+        function EditAfer(msg) {
+            if (msg == "1") {
+                $("#editDiv").dialog("close");
+                InitData();
+            }
+            else {
+                $.messager.alert("提示", "修改失败，请稍后重试");
+            }
+        }
+        function AddShow() {
+            $("#addDiv").show();
+            $("#addDiv input,textarea").val('');
+            $("#addDiv").dialog({
+                title: "添加用户",
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizable: true,
+
+                buttons: [{
+                    text: "添加",
+                    iconCls: "icon-add",
+                    handler: function () {
+                        $("#addDiv form").submit();
+                    }
+                }, {
+                    text: "取消",
+                    iconCls: "icon-cancel",
+                    handler: function () {
+                        $("#addDiv").dialog("close");
+                    }
+                }]
+            });
+        }
+        function AddAfter(msg) {
+            if(msg=="1")
+            {
+                $("#addDiv").dialog("close");
+                InitData();
+            }
+            else {
+                $.messager.alert("提示","添加失败，请稍后重试");
+            }
+        }
+    </script>
+</head>
+<body>
+    <!--列表-->
+    <div>
+        <table id="tt"></table>
+    </div>
+    <!--添加-->
+    <div  id="addDiv">
+          @using (Ajax.BeginForm("Add", "User", new AjaxOptions() {
+               
+                OnSuccess="AddAfter"
+          }))
+          {
+              <table>
+                  <tr>
+                      <td>用户名:</td>
+                      <td>@Html.TextBoxFor(c=>c.UserName)</td>
+                  </tr>
+                   <tr>
+                      <td>密码:</td>
+                      <td>@Html.PasswordFor(c=>c.UserPwd)</td>
+                  </tr>
+                     <tr>
+                      <td>姓名：</td>
+                      <td>@Html.TextBoxFor(c=>c.UserTrueName)</td>
+                  </tr>
+                  <tr>
+                      <td>备注：</td>
+                      <td>@Html.TextBoxFor(c=>c.Remark)</td>
+                  </tr>
+              </table>
+          
+          }
+    </div>
+    <!--修改-->
+    <div  id="editDiv">
+        <iframe   ></iframe>
+    </div>
+</body>
+</html>

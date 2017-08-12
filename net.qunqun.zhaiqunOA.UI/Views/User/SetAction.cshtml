@@ -1,0 +1,112 @@
+﻿@model   net.qunqun.zhaiqunOA.Model.SetActionViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>SetAction</title>
+
+    <script src="../../Scripts/jquery-1.7.1.min.js"></script>
+    <script src="../../Scripts/jquery.easyui.min.js"></script>
+    <script src="../../Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(":radio").click(function () {
+                var userId = $("#UserId").val();
+                var actionId=$(this).attr("name")
+                var type = $(this).val();
+                $.post('@Url.Action("SetAction","User")', { userId: userId, actionId: actionId,type:type }, function (msg) {
+                    if (msg！=='1') {
+                        alert("设置权限失败，请稍后重试");
+                    }
+                    else {
+                        alert("设置成功");
+                    }
+                }); 
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div>
+        @{
+            var userInfo = Model.UserModel;
+            var actionModels = Model.ActionModels;
+        }
+        <input type="hidden"  id="UserId"  value="@userInfo.UserId"/>
+        <span>为<font color="red">@userInfo.UserTrueName </font>分配权限</span>
+        <table>
+            <tr>
+                <th>权限名称</th>
+                <th>允许</th>
+                <th>禁止</th>
+                <th>忽略</th>
+
+            </tr>
+
+            @{
+                    
+                int count = 0;
+                foreach (var item in actionModels)
+                {
+                    //0-忽略 1-允许，2-禁止
+                    //通过用户的权限信息结合当前权限信息做查询
+                    //如果查到，则判断isAllow true为允许，false为禁止
+                    //如果没查到，则为0
+                    count++;
+                    int result = 0;
+                    var ua1 = userInfo.UserAction.Where(p => p.ActionId == item.ActionId);
+                    if (ua1.Count() > 0)
+                    {
+                        if (ua1.First().HasPermission)
+                        {
+                            result = 1;
+                        }
+                        else
+                        {
+                            result = 2;
+                        }
+                    }
+                <tr>
+                    <td>
+                        @item.ActionTitle
+                    </td>
+                    <td>
+                        <input type="radio"  value="1" name="@item.ActionId"
+                            @if (result == 1)
+                            {
+                                @("checked")
+                                @("disabled")
+                            }/>
+                    </td>
+                    <td>
+                        <input type="radio"  value="2" name="@item.ActionId"
+                                @if (result == 2)
+                                {
+                                @("checked")
+                                @("disabled")
+                                }/>
+                    </td>
+                    <td>
+                        <input type="radio"  value="0" name="@item.ActionId"
+                                     @if (result == 2)
+                                     {
+                                @("checked")
+                                         @("disabled")
+                                     }
+                            />
+
+                    </td>
+                </tr>
+                }
+            }
+
+        </table>
+    </div>
+</body>
+</html>
+

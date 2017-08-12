@@ -1,0 +1,49 @@
+﻿@model  net.qunqun.zhaiqunOA.Model.RoleInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="../../Scripts/jquery-1.7.1.min.js"></script>
+    <script src="../../Scripts/jquery.easyui.min.js"></script>
+    <script src="../../Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <title>Edit</title>
+    <script  type="text/javascript">
+
+        function EditAfer(msg) {
+            window.parent.EditAfer(msg);
+       
+        }
+        function FormSubmit() {
+            $("form").submit();
+        }
+    </script>
+</head>
+<body>
+    <div>
+        @using (Ajax.BeginForm("Edit", "RoleInfo", new AjaxOptions() {
+
+            OnSuccess = "EditAfer"
+        }))
+        {
+            <table>
+                <tr>
+                    <td>角色名称：</td>
+                    <td>
+                        @Html.TextBoxFor(d=>d.RoleName)
+                        <input type="hidden" name="RoleId" value="@Model.RoleId" />
+                        <input type="hidden" name="IsDelete" value="@Model.IsDelete" />
+                    </td>
+                </tr>
+                <tr>
+                     <td>说明：</td>
+                    <td>@Html.TextBoxFor(d=>d.Remark)</td>
+                </tr>
+            </table> 
+        }
+    </div>
+</body>
+</html>

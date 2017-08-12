@@ -1,0 +1,209 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Index</title> 
+    <link href="../../Content/MyFile/easyUithemes/default/easyui.css" rel="stylesheet" />
+    <link href="../../Content/MyFile/easyUithemes/icon.css" rel="stylesheet" />
+    <link href="../../Content/MyFile/easyUithemes/demo.css" rel="stylesheet" />
+       <script src="../../Scripts/jquery-1.7.1.min.js"></script>
+    <script src="../../Scripts/jquery.easyui.min.js"></script>
+    <script src="../../Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script  type="text/javascript">
+        $(function () {
+            $("#addDiv").hide();
+            $("#editDiv").hide();
+            InitData();
+        });
+        function InitData() {
+            $('#tt').treegrid({
+                url: '@Url.Action("GetDataList","DepartInfo")',
+                   title: '部门列表',
+                   width: 700,
+                   height: 400,
+                   fitColumns: true,
+                   loadMsg: '正在加载部门的信息...',
+                   idField: 'DepartId',
+                   treeField: 'DepartName',
+                   singleSelect: true,
+                   columns: [[
+                       { title: '编号', field: 'DepartId', width: 50 },
+                       { title: '部门名称', field: 'DepartName', width: 100 }
+                   ]],
+                   toolbar: [{
+                       id: 'toolbarAdd',
+                       text: '添加',
+                       iconCls: 'icon-add',
+                       handler: function () {
+                           AddShow();
+                       }
+                   },
+                    {
+                    id: 'toolbarEdit',
+                    text: '修改',
+                    iconCls: 'icon-edit',
+                    handler: function () {
+                        EditShow();
+                    }
+                    },
+                    {
+                   id: 'toolbarRemove',
+                    text: '删除',
+                    iconCls: 'icon-remove',
+                    handler: function () {
+                        RemoveShow();
+                    }
+                }]
+               });
+        }
+
+        function RemoveShow()
+        {
+            var row=$("#tt").treegrid("getSelected");
+            if (row==null) {
+                $.messager.alert("提示","请选择要删除的行");
+                return;
+            }
+            $.messager.confirm("提示", "确定要删除吗？", function (msg) {
+                if (msg) {
+                    $.post('@Url.Action("Remove","DepartInfo")', { "id": row["DepartId"] }, function (msg) {
+                        if (msg == "1") {
+                            InitData();
+                        }
+                        else {
+                            $.messager.alert("提示", "删除失败，请稍后重试");
+                        }
+                    });
+                }
+            });      
+        }
+        function EditShow()
+        {
+            $("#editDiv").show();
+            var row = $('#tt').treegrid("getSelected");
+            if (row==null) {
+                $.messager.alert("提示", "请选择一条要修改的数据");
+                return;
+            }
+            $("#editDiv iframe").attr("src", '@Url.Action("Edit", "DepartInfo")?id=' + row["DepartId"]);
+            $("#editDiv").dialog({
+                title: "添加用户",
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizable: true,
+
+                buttons: [{
+                    text: "修改",
+                    iconCls: "icon-add",
+                    handler: function () {
+                        $("#editDiv iframe")[0].contentWindow.SubmitEdit();
+                    }
+                }, {
+                    text: "取消",
+                    iconCls: "icon-cancel",
+                    handler: function () {
+                        $("#editDiv").dialog("close");
+                    }
+                }]
+            });
+        }
+
+        function AddShow() {
+            $("#addDiv").show();
+            $('input,textarea').val('');
+            var row = $("#tt").treegrid("getSelected");
+            if (row==null) {
+                $('#DepartParentId').val(0);
+            }
+            else {
+                $("#DepartParentId").val(row["DepartId"]);
+            }
+
+            $("#addDiv").dialog({
+                title: "添加用户",
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizable: true,
+
+                buttons: [{
+                    text: "添加",
+                    iconCls: "icon-add",
+                    handler: function () {
+                        $("#addDiv form").submit();
+                    }
+                }, {
+                    text: "取消",
+                    iconCls: "icon-cancel",
+                    handler: function () {
+                        $("#addDiv").dialog("close");
+                    }
+                }]
+            });
+        }
+
+        function AddAfter(msg) {
+            if(msg=="1")
+            {
+                $("#addDiv").dialog("close");
+                InitData();
+
+            }
+            else {
+                $.messager.alert("警告","添加失败","请稍后再试");
+            }
+        }
+        function EditAfter(msg) {
+            if(msg=="1"){
+                $('#editDiv').dialog('close');
+                InitData();
+            }
+            else {
+                $.messager.alert("提示","修改失败，稍后重试");
+            }
+        }
+    </script>
+</head>
+<body>
+    <!--部门列表-->
+    <div>
+        <table  id="tt"></table>
+    </div>
+    <!--部门添加-->
+    <div  id="addDiv">
+        @using (Ajax.BeginForm("Add", "DepartInfo", new AjaxOptions()
+        {
+            OnSuccess="AddAfter"
+
+        })) 
+        {
+            <table  >
+                <tr>
+                    <td>部门名称：</td>
+                    <td>
+                        <input type="text" name="DepartName"  id="DepartName"/>
+                        <input type="hidden" name="DepartParentId"  id="DepartParentId" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>说明：</td>
+                    <td>
+                        <textarea  name="Remark"></textarea>
+                    </td>
+                </tr>
+            
+            </table>
+        }
+    </div>
+    <!--部门修改-->
+    <div  id="editDiv">
+        <iframe  frameborder="0"  src=""></iframe>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+	<description>An  example that demsononstrates simple IoC features.</description>
+	<object type="net.qunqun.zhaiqunOA.UI.Controllers.UserLoginController, net.qunqun.zhaiqunOA.UI" singleton="false" >
+		<property name="userInfoBll"  ref="UserInfoManager1"/>
+	</object>
+	<object type="net.qunqun.zhaiqunOA.UI.Controllers.DepartInfoController, net.qunqun.zhaiqunOA.UI" singleton="false" >
+		<property name="departInfoBll"  ref="DepartInfoManager1"/>
+	</object>
+	<object type="net.qunqun.zhaiqunOA.UI.Controllers.UserController, net.qunqun.zhaiqunOA.UI" singleton="false" >
+		<property name="userInfoBll"  ref="UserInfoManager1"/>
+		<property name="roleInfoBll"  ref="RoleInfoManager1"/>
+	</object>
+<object type="net.qunqun.zhaiqunOA.UI.Controllers.RoleInfoController, net.qunqun.zhaiqunOA.UI" singleton="false" >
+		<property name="roleInfoBll"  ref="RoleInfoManager1"/>
+	</object>
+	<object type="net.qunqun.zhaiqunOA.UI.Controllers.ActionInfoController, net.qunqun.zhaiqunOA.UI" singleton="false" >
+		<property name="actionInfoBll"  ref="ActionInfoManager1"/>
+	</object>
+</objects>

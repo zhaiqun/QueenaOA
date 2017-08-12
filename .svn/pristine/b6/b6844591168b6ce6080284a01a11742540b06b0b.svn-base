@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="82c49cca660b4c72bed246a41d774e06" Name="关系图1">
+        <EntityTypeShape EntityType="zhaiqunOADBModel.UserInfo" Width="1.5" PointX="0.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="zhaiqunOADBModel.DepartInfo" Width="1.5" PointX="1.25" PointY="5.25" />
+        <EntityTypeShape EntityType="zhaiqunOADBModel.RoleInfo" Width="1.5" PointX="3.125" PointY="3.75" />
+        <EntityTypeShape EntityType="zhaiqunOADBModel.ActionInfo" Width="1.5" PointX="6.125" PointY="2.125" />
+        <AssociationConnector Association="zhaiqunOADBModel.UserInfoRoleInfo" />
+        <AssociationConnector Association="zhaiqunOADBModel.RoleInfoActionInfo" />
+        <EntityTypeShape EntityType="zhaiqunOADBModel.UserAction" Width="1.5" PointX="3.25" PointY="1.375" />
+        <AssociationConnector Association="zhaiqunOADBModel.UserInfoUserAction" />
+        <AssociationConnector Association="zhaiqunOADBModel.UserActionActionInfo" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

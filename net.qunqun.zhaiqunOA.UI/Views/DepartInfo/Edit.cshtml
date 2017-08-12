@@ -1,0 +1,55 @@
+﻿@model   net.qunqun.zhaiqunOA.Model.DepartInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="../../Scripts/jquery-1.7.1.min.js"></script>
+    <script src="../../Scripts/jquery.easyui.min.js"></script>
+    <script src="../../Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <title>Edit</title>
+    <script  type="text/javascript">
+
+        function EditAfter(msg) {
+            window.parent.EditAfter(msg);
+            //if (msg == "1")  {
+          
+            //}
+            //else {
+            //    $.messager.alert("提示","修改失败，请稍后重试");
+            //}
+        }
+        function  SubmitEdit() {
+            $("form").submit();
+        }
+    </script>
+</head>
+<body>
+    <div>
+        @using (Ajax.BeginForm("Edit", "DepartInfo", new AjaxOptions() { 
+        
+            OnSuccess="EditAfter"
+        }))
+        {
+            <table>
+                <tr>
+                    <td>部门名称：</td>
+                    <td>
+                        @Html.TextBoxFor(d=>d.DepartName)
+                        <input type="hidden" name="DepartId" value="@Model.DepartId" />
+                        <input type="hidden" name="DepartParentId" value="@Model.DepartParentId " />
+                    </td>
+                </tr>
+                <tr>
+                     <td>说明：</td>
+                    <td>@Html.TextBoxFor(d=>d.Remark)</td>
+                </tr>
+            </table> 
+        }
+    </div>
+</body>
+</html>

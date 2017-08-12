@@ -1,0 +1,23 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="EF.Utility.CS.ttinclude"#>
+<#@ output extension=".cs" #>
+using net.qunqun.zhaiqunOA.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace net.qunqun.zhaiqunOA.IBll
+{
+<#
+    MetadataLoader loader=new MetadataLoader(this);
+    EdmItemCollection collection= loader.CreateEdmItemCollection("net.qunqun.zhaiqunOA.Model/UserInfo.edmx");
+    foreach(EntityType item in collection.GetItems<EntityType>())
+    {
+#>
+public partial interface I<#=item.Name#>Bll:IBaseBll<<#=item.Name#>>
+{
+
+}
+<#}#>
+}

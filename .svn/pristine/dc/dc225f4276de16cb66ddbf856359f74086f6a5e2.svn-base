@@ -1,0 +1,28 @@
+﻿using net.qunqun.zhaiqunOA.Model;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using net.qunqun.zhaiqunOA.IDal;
+ namespace  net.qunqun.zhaiqunOA.Dal
+{
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="EF.Utility.CS.ttinclude"#>
+<#@ output extension=".cs" #>
+<#
+    MetadataLoader loader=new MetadataLoader(this);
+    EdmItemCollection collection= loader.CreateEdmItemCollection("net.qunqun.zhaiqunOA.Model/UserInfo.edmx");
+    foreach(EntityType item in collection.GetItems<EntityType>())
+    {
+#>
+
+public partial class <#=item.Name#>Dal:BaseService<<#=item.Name#>>,I<#=item.Name#>Dal
+{
+
+}
+<#}#>
+}

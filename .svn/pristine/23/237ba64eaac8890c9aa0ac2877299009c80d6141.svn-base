@@ -1,0 +1,21 @@
+﻿@model   IQueryable<net.qunqun.zhaiqunOA.Model.UserInfo>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@Html.ActionLink("增加","Add")
+<table>
+    <thead>
+        <tr>
+            <th>编号</th> <th>用户名</th> <th>真实姓名</th> 
+        </tr>
+    </thead>
+    <tbody>
+          @foreach (var item in ViewData.Model)
+          {
+              <tr><td>@item.UserId</td><td>@item.UserName</td><td>@item.UserTrueName</td></tr>
+          }
+    
+    </tbody>
+</table>

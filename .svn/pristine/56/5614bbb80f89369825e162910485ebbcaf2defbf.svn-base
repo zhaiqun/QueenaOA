@@ -1,0 +1,428 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="zhaiqunOADBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="zhaiqunOADBModelStoreContainer">
+    <EntitySet Name="UserInfo" EntityType="zhaiqunOADBModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DepartInfo" EntityType="zhaiqunOADBModel.Store.DepartInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RoleInfo" EntityType="zhaiqunOADBModel.Store.RoleInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ActionInfo" EntityType="zhaiqunOADBModel.Store.ActionInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserAction" EntityType="zhaiqunOADBModel.Store.UserAction" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserInfoRoleInfo" EntityType="zhaiqunOADBModel.Store.UserInfoRoleInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RoleInfoActionInfo" EntityType="zhaiqunOADBModel.Store.RoleInfoActionInfo" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_UserInfoRoleInfo_UserInfo" Association="zhaiqunOADBModel.Store.FK_UserInfoRoleInfo_UserInfo">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="UserInfoRoleInfo" EntitySet="UserInfoRoleInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfoRoleInfo_RoleInfo" Association="zhaiqunOADBModel.Store.FK_UserInfoRoleInfo_RoleInfo">
+      <End Role="RoleInfo" EntitySet="RoleInfo" />
+      <End Role="UserInfoRoleInfo" EntitySet="UserInfoRoleInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleInfoActionInfo_RoleInfo" Association="zhaiqunOADBModel.Store.FK_RoleInfoActionInfo_RoleInfo">
+      <End Role="RoleInfo" EntitySet="RoleInfo" />
+      <End Role="RoleInfoActionInfo" EntitySet="RoleInfoActionInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleInfoActionInfo_ActionInfo" Association="zhaiqunOADBModel.Store.FK_RoleInfoActionInfo_ActionInfo">
+      <End Role="ActionInfo" EntitySet="ActionInfo" />
+      <End Role="RoleInfoActionInfo" EntitySet="RoleInfoActionInfo" />
+    </AssociationSet>
+    <AssociationSet Name="UserInfoUserAction" Association="zhaiqunOADBModel.Store.UserInfoUserAction">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="UserAction" EntitySet="UserAction" />
+    </AssociationSet>
+    <AssociationSet Name="UserActionActionInfo" Association="zhaiqunOADBModel.Store.UserActionActionInfo">
+      <End Role="UserAction" EntitySet="UserAction" />
+      <End Role="ActionInfo" EntitySet="ActionInfo" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserInfo">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="UserPwd" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="UserTrueName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="IsDelete" Type="bit" Nullable="false" />
+    <Property Name="SubBy" Type="int" Nullable="false" />
+    <Property Name="SubTime" Type="datetime" Nullable="false" />
+    <Property Name="Remark" Type="nvarchar" Nullable="true" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="DepartInfo">
+    <Key>
+      <PropertyRef Name="DepartId" />
+    </Key>
+    <Property Name="DepartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartName" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="DepartParentId" Type="int" Nullable="true" />
+    <Property Name="IsDelete" Type="bit" Nullable="false" />
+    <Property Name="SubBy" Type="int" Nullable="false" />
+    <Property Name="SubTime" Type="datetime" Nullable="false" />
+    <Property Name="Remark" Type="nvarchar" Nullable="true" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="RoleInfo">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="IsDelete" Type="bit" Nullable="false" />
+    <Property Name="SubBy" Type="int" Nullable="false" />
+    <Property Name="SubTime" Type="datetime" Nullable="false" />
+    <Property Name="Remark" Type="nvarchar" Nullable="true" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="ActionInfo">
+    <Key>
+      <PropertyRef Name="ActionId" />
+    </Key>
+    <Property Name="ActionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActionTitle" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ContorllerName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ActionName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsDelete" Type="bit" Nullable="false" />
+    <Property Name="SubBy" Type="int" Nullable="false" />
+    <Property Name="SubTime" Type="datetime" Nullable="false" />
+    <Property Name="Remark" Type="nvarchar" Nullable="true" MaxLength="1000" />
+    <Property Name="IsMenu" Type="bit" Nullable="false" />
+    <Property Name="MenuIcon" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="UserAction">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="ActionId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ActionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HasPermission" Type="bit" Nullable="false" />
+    <Property Name="UserInfoUserId" Type="int" Nullable="false" />
+    <Property Name="ActionInfo_ActionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserInfoRoleInfo">
+    <Key>
+      <PropertyRef Name="UserInfo_UserId" />
+      <PropertyRef Name="RoleInfo_RoleId" />
+    </Key>
+    <Property Name="UserInfo_UserId" Type="int" Nullable="false" />
+    <Property Name="RoleInfo_RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoleInfoActionInfo">
+    <Key>
+      <PropertyRef Name="RoleInfo_RoleId" />
+      <PropertyRef Name="ActionInfo_ActionId" />
+    </Key>
+    <Property Name="RoleInfo_RoleId" Type="int" Nullable="false" />
+    <Property Name="ActionInfo_ActionId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserInfoUserAction">
+    <End Role="UserInfo" Type="zhaiqunOADBModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="UserAction" Type="zhaiqunOADBModel.Store.UserAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserAction">
+        <PropertyRef Name="UserInfoUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserActionActionInfo">
+    <End Role="UserAction" Type="zhaiqunOADBModel.Store.UserAction" Multiplicity="*" />
+    <End Role="ActionInfo" Type="zhaiqunOADBModel.Store.ActionInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ActionInfo">
+        <PropertyRef Name="ActionId" />
+      </Principal>
+      <Dependent Role="UserAction">
+        <PropertyRef Name="ActionInfo_ActionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfoRoleInfo_UserInfo">
+    <End Role="UserInfo" Type="zhaiqunOADBModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="UserInfoRoleInfo" Type="zhaiqunOADBModel.Store.UserInfoRoleInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserInfoRoleInfo">
+        <PropertyRef Name="UserInfo_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfoRoleInfo_RoleInfo">
+    <End Role="UserInfoRoleInfo" Type="zhaiqunOADBModel.Store.UserInfoRoleInfo" Multiplicity="*" />
+    <End Role="RoleInfo" Type="zhaiqunOADBModel.Store.RoleInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="RoleInfo">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserInfoRoleInfo">
+        <PropertyRef Name="RoleInfo_RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleInfoActionInfo_RoleInfo">
+    <End Role="RoleInfo" Type="zhaiqunOADBModel.Store.RoleInfo" Multiplicity="1" />
+    <End Role="RoleInfoActionInfo" Type="zhaiqunOADBModel.Store.RoleInfoActionInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleInfo">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="RoleInfoActionInfo">
+        <PropertyRef Name="RoleInfo_RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleInfoActionInfo_ActionInfo">
+    <End Role="RoleInfoActionInfo" Type="zhaiqunOADBModel.Store.RoleInfoActionInfo" Multiplicity="*" />
+    <End Role="ActionInfo" Type="zhaiqunOADBModel.Store.ActionInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ActionInfo">
+        <PropertyRef Name="ActionId" />
+      </Principal>
+      <Dependent Role="RoleInfoActionInfo">
+        <PropertyRef Name="ActionInfo_ActionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="zhaiqunOADBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OAcontext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="UserInfo" EntityType="zhaiqunOADBModel.UserInfo" />
+          <EntitySet Name="DepartInfo" EntityType="zhaiqunOADBModel.DepartInfo" />
+          <EntitySet Name="RoleInfo" EntityType="zhaiqunOADBModel.RoleInfo" />
+          <EntitySet Name="ActionInfo" EntityType="zhaiqunOADBModel.ActionInfo" />
+          <AssociationSet Name="UserInfoRoleInfo" Association="zhaiqunOADBModel.UserInfoRoleInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="RoleInfo" EntitySet="RoleInfo" />
+          </AssociationSet>
+          <AssociationSet Name="RoleInfoActionInfo" Association="zhaiqunOADBModel.RoleInfoActionInfo">
+            <End Role="RoleInfo" EntitySet="RoleInfo" />
+            <End Role="ActionInfo" EntitySet="ActionInfo" />
+          </AssociationSet>
+          <EntitySet Name="UserAction" EntityType="zhaiqunOADBModel.UserAction" />
+          <AssociationSet Name="UserInfoUserAction" Association="zhaiqunOADBModel.UserInfoUserAction">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserAction" EntitySet="UserAction" />
+          </AssociationSet>
+          <AssociationSet Name="UserActionActionInfo" Association="zhaiqunOADBModel.UserActionActionInfo">
+            <End Role="UserAction" EntitySet="UserAction" />
+            <End Role="ActionInfo" EntitySet="ActionInfo" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserPwd" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserTrueName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Type="Boolean" Name="IsDelete" Nullable="false" />
+          <Property Type="Int32" Name="SubBy" Nullable="false" />
+          <Property Type="DateTime" Name="SubTime" Nullable="false" />
+          <Property Type="String" Name="Remark" Nullable="true" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RoleInfo" Relationship="zhaiqunOADBModel.UserInfoRoleInfo" FromRole="UserInfo" ToRole="RoleInfo" />
+          <NavigationProperty Name="UserAction" Relationship="zhaiqunOADBModel.UserInfoUserAction" FromRole="UserInfo" ToRole="UserAction" />
+        </EntityType>
+        <EntityType Name="DepartInfo">
+          <Key>
+            <PropertyRef Name="DepartId" />
+          </Key>
+          <Property Type="Int32" Name="DepartId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="DepartName" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DepartParentId" />
+          <Property Type="Boolean" Name="IsDelete" Nullable="false" />
+          <Property Type="Int32" Name="SubBy" Nullable="false" />
+          <Property Type="DateTime" Name="SubTime" Nullable="false" />
+          <Property Type="String" Name="Remark" Nullable="true" Unicode="true" FixedLength="false" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="RoleInfo">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Type="Int32" Name="RoleId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="RoleName" Nullable="false" FixedLength="false" Unicode="true" MaxLength="10" />
+          <Property Type="Boolean" Name="IsDelete" Nullable="false" />
+          <Property Type="Int32" Name="SubBy" Nullable="false" />
+          <Property Type="DateTime" Name="SubTime" Nullable="false" />
+          <Property Type="String" Name="Remark" Nullable="true" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserInfo" Relationship="zhaiqunOADBModel.UserInfoRoleInfo" FromRole="RoleInfo" ToRole="UserInfo" />
+          <NavigationProperty Name="ActionInfo" Relationship="zhaiqunOADBModel.RoleInfoActionInfo" FromRole="RoleInfo" ToRole="ActionInfo" />
+        </EntityType>
+        <EntityType Name="ActionInfo">
+          <Key>
+            <PropertyRef Name="ActionId" />
+          </Key>
+          <Property Type="Int32" Name="ActionId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ActionTitle" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="ContorllerName" Nullable="false" Unicode="true" FixedLength="false" MaxLength="50" />
+          <Property Type="String" Name="ActionName" Nullable="false" Unicode="true" MaxLength="50" FixedLength="false" />
+          <Property Type="Boolean" Name="IsDelete" Nullable="false" />
+          <Property Type="Int32" Name="SubBy" Nullable="false" />
+          <Property Type="DateTime" Name="SubTime" Nullable="false" />
+          <Property Type="String" Name="Remark" Nullable="true" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RoleInfo" Relationship="zhaiqunOADBModel.RoleInfoActionInfo" FromRole="ActionInfo" ToRole="RoleInfo" />
+          <NavigationProperty Name="UserAction" Relationship="zhaiqunOADBModel.UserActionActionInfo" FromRole="ActionInfo" ToRole="UserAction" />
+          <Property Type="Boolean" Name="IsMenu" Nullable="false" />
+          <Property Type="String" Name="MenuIcon" Nullable="true" Unicode="true" FixedLength="false" MaxLength="Max" />
+        </EntityType>
+        <Association Name="UserInfoRoleInfo">
+          <End Type="zhaiqunOADBModel.UserInfo" Role="UserInfo" Multiplicity="*" />
+          <End Type="zhaiqunOADBModel.RoleInfo" Role="RoleInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="RoleInfoActionInfo">
+          <End Type="zhaiqunOADBModel.RoleInfo" Role="RoleInfo" Multiplicity="*" />
+          <End Type="zhaiqunOADBModel.ActionInfo" Role="ActionInfo" Multiplicity="*" />
+        </Association>
+        <EntityType Name="UserAction" >
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ActionId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="ActionId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Boolean" Name="HasPermission" Nullable="false" />
+          <NavigationProperty Name="UserInfo" Relationship="zhaiqunOADBModel.UserInfoUserAction" FromRole="UserAction" ToRole="UserInfo" />
+          <Property Type="Int32" Name="UserInfoUserId" Nullable="false" />
+          <NavigationProperty Name="ActionInfo" Relationship="zhaiqunOADBModel.UserActionActionInfo" FromRole="UserAction" ToRole="ActionInfo" />
+        </EntityType>
+        <Association Name="UserInfoUserAction">
+          <End Type="zhaiqunOADBModel.UserInfo" Role="UserInfo" Multiplicity="1" />
+          <End Type="zhaiqunOADBModel.UserAction" Role="UserAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserAction">
+              <PropertyRef Name="UserInfoUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserActionActionInfo">
+          <End Type="zhaiqunOADBModel.UserAction" Role="UserAction" Multiplicity="*" />
+          <End Type="zhaiqunOADBModel.ActionInfo" Role="ActionInfo" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="zhaiqunOADBModelStoreContainer" CdmEntityContainer="OAcontext">
+    <EntitySetMapping Name="UserInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(zhaiqunOADBModel.UserInfo)">
+        <MappingFragment StoreEntitySet="UserInfo">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserPwd" ColumnName="UserPwd" />
+          <ScalarProperty Name="UserTrueName" ColumnName="UserTrueName" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="SubBy" ColumnName="SubBy" />
+          <ScalarProperty Name="SubTime" ColumnName="SubTime" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DepartInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(zhaiqunOADBModel.DepartInfo)">
+        <MappingFragment StoreEntitySet="DepartInfo">
+          <ScalarProperty Name="DepartId" ColumnName="DepartId" />
+          <ScalarProperty Name="DepartName" ColumnName="DepartName" />
+          <ScalarProperty Name="DepartParentId" ColumnName="DepartParentId" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="SubBy" ColumnName="SubBy" />
+          <ScalarProperty Name="SubTime" ColumnName="SubTime" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(zhaiqunOADBModel.RoleInfo)">
+        <MappingFragment StoreEntitySet="RoleInfo">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="SubBy" ColumnName="SubBy" />
+          <ScalarProperty Name="SubTime" ColumnName="SubTime" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActionInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(zhaiqunOADBModel.ActionInfo)">
+        <MappingFragment StoreEntitySet="ActionInfo">
+          <ScalarProperty Name="ActionId" ColumnName="ActionId" />
+          <ScalarProperty Name="ActionTitle" ColumnName="ActionTitle" />
+          <ScalarProperty Name="ContorllerName" ColumnName="ContorllerName" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="SubBy" ColumnName="SubBy" />
+          <ScalarProperty Name="SubTime" ColumnName="SubTime" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
+          <ScalarProperty Name="MenuIcon" ColumnName="MenuIcon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAction">
+      <EntityTypeMapping TypeName="IsTypeOf(zhaiqunOADBModel.UserAction)">
+        <MappingFragment StoreEntitySet="UserAction">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ActionId" ColumnName="ActionId" />
+          <ScalarProperty Name="HasPermission" ColumnName="HasPermission" />
+          <ScalarProperty Name="UserInfoUserId" ColumnName="UserInfoUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserInfoRoleInfo" TypeName="zhaiqunOADBModel.UserInfoRoleInfo" StoreEntitySet="UserInfoRoleInfo">
+      <EndProperty Name="UserInfo">
+        <ScalarProperty Name="UserId" ColumnName="UserInfo_UserId" />
+      </EndProperty>
+      <EndProperty Name="RoleInfo">
+        <ScalarProperty Name="RoleId" ColumnName="RoleInfo_RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RoleInfoActionInfo" TypeName="zhaiqunOADBModel.RoleInfoActionInfo" StoreEntitySet="RoleInfoActionInfo">
+      <EndProperty Name="RoleInfo">
+        <ScalarProperty Name="RoleId" ColumnName="RoleInfo_RoleId" />
+      </EndProperty>
+      <EndProperty Name="ActionInfo">
+        <ScalarProperty Name="ActionId" ColumnName="ActionInfo_ActionId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserActionActionInfo" TypeName="zhaiqunOADBModel.UserActionActionInfo" StoreEntitySet="UserAction">
+      <EndProperty Name="ActionInfo">
+        <ScalarProperty Name="ActionId" ColumnName="ActionInfo_ActionId" />
+      </EndProperty>
+      <EndProperty Name="UserAction">
+        <ScalarProperty Name="UserId" ColumnName="UserId" />
+        <ScalarProperty Name="ActionId" ColumnName="ActionId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
